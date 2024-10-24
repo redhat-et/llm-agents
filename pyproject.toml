@@ -1,0 +1,53 @@
+[tool.poetry]
+name = "llm_agents"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+authors = ["Red Hat"]
+packages = [{include = "llm_agents"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+pyarrow = "15.0.0"
+langchain = "^0.2.5"
+langchain-openai = "^0.1.9"
+langchain-community = "^0.2.5"
+mlflow = "^2.14.1"
+python-dotenv = "^1.0.1"
+fastapi = "^0.111.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.1"
+pytest-cov = "^4.0.0"
+ruff = "^0.4.1"
+bump2version = "^1.0.1"
+
+[tool.poetry.group.webapp.dependencies]
+streamlit = "~1.32.0"
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
+
+[[tool.poetry.source]]
+name = "de-cop-nexus"
+url = "https://nexus.corp.redhat.com/repository/de-cop-pypi-releases/simple/"
+priority = "supplemental"
+
+[tool.ruff]
+line-length = 140
+
+[tool.ruff.lint]
+select = ["E", "F", "D", "C", "N"]
+ignore = [
+    "E501", # line-too-long
+    "E402", # module-import-not-at-top-file
+    "D203", # one-blank-line-before-class
+    "D212", # multi-line-summary-first-line
+    "D100", # undocumented-public-module
+]
+per-file-ignores = { "tests/*" = ["D"] }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
