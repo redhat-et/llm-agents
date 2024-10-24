@@ -1,0 +1,23 @@
+tools:
+  - name: "constitution_tool"
+    description: "Answers questions about the U.S. Constitution."
+    url: "https://my.app/v1/completions"
+    config:
+      method: 'POST'
+      headers:
+        'Content-Type': 'application/json'
+        'Authorization': 'Basic 12345'
+      body:
+        prompt: '{{prompt}}'
+      responseParser: 'json.answer'
+      responseMetadata: 
+        - name: 'sources'
+          loc: 'json.sources'
+      responseFormat:
+        agent: '{{response}}'
+        json: 
+          - "response"
+          - "sources"
+    examples:
+      - "What is the definition of a citizen in the U.S. Constitution?"
+      - "What article describes the power of the judiciary branch?"
