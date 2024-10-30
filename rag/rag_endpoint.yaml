@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rag-app
+  template:
+    metadata:
+      labels:
+        app: rag-app
+    spec:
+      containers:
+        - name: rag-app-container
+          image: quay.io/shanand/kubecon-agent-demo-rag:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MILVUS_HOST
+              value: <HOST> #Update with the host name
+          resources:
+            limits:
+              memory: "16Gi"
+              cpu: "4"
+            requests:
+              memory: "4Gi"
+              cpu: "2"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rag-app-service
+spec:
+  selector:
+    app: rag-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: rag-app-route
+spec:
+  to:
+    kind: Service
+    name: rag-app-service
+  port:
+    targetPort: 80
