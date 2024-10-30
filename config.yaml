@@ -1,23 +1,18 @@
 tools:
-  - name: "constitution_tool"
-    description: "Answers questions about the U.S. Constitution."
-    url: "https://my.app/v1/completions"
+  - name: "get_assistant"
+    description: "Answers questions related to CloudForge products"
+    url: "http://a8e66c107696f4ba98c48cee392d6fc8-419097757.us-east-2.elb.amazonaws.com/query"
     config:
       method: 'POST'
       headers:
         'Content-Type': 'application/json'
-        'Authorization': 'Basic 12345'
       body:
-        prompt: '{{prompt}}'
-      responseParser: 'json.answer'
-      responseMetadata: 
-        - name: 'sources'
-          loc: 'json.sources'
+        query_text: '{{prompt}}'
+        top_k: 3
+      responseParser: 'text_chunk'
       responseFormat:
         agent: '{{response}}'
-        json: 
+        json:
           - "response"
-          - "sources"
-    examples:
-      - "What is the definition of a citizen in the U.S. Constitution?"
-      - "What article describes the power of the judiciary branch?"
+      examples:
+        - "What is the AI Optimizer product?"
