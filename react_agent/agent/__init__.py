@@ -12,6 +12,6 @@ def react_agent():
     response_format = "agent"
     tools = import_tools(common_tools_kwargs={"response_format": response_format})
     prompt = PromptTemplate.from_template(REACT_PROMPT)
-    agent = create_react_agent(completion_llm, tools, prompt)
+    agent = create_react_agent(completion_llm, tools, prompt, stop_sequence=["Observation:"])
     agent_executor = AgentExecutor(name="ReActAgent", agent=agent, tools=tools, handle_parsing_errors=True)
     return agent_executor

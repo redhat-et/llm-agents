@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-agent-server
+  namespace: react-agent-test
+spec:
+  selector:
+    app: react-agent-server
+  ports:
+  - name: react-agent-port
+    protocol: TCP
+    port: 2113
+    targetPort: 2113

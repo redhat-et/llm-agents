@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streamlit-server
+  namespace: react-agent-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: streamlit-server
+  template:
+    metadata:
+      labels:
+        app: streamlit-server
+    spec:
+      containers:
+      - name: streamlit-server
+        image: docker.io/hemaveeradhi/streamlit:latest
+        ports:
+        - containerPort: 8501
+        envFrom:
+        - configMapRef:
+            name: streamlit-config

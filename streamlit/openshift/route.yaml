@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: streamlit-route
+  namespace: react-agent-test
+spec:
+  to:
+    kind: Service
+    name: streamlit-server
+  port:
+    targetPort: streamlit-port
+  tls:
+    termination: edge
+  wildcardPolicy: None

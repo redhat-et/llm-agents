@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-agent-server
+  namespace: react-agent-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-agent-server
+  template:
+    metadata:
+      labels:
+        app: react-agent-server
+    spec:
+      containers:
+      - name: react-agent-server
+        image: docker.io/hemaveeradhi/llm-agent:latest
+        ports:
+        - containerPort: 2113
+        envFrom:
+        - configMapRef:
+            name: react-agent-config
+        volumeMounts:
+        - name: config-volume
+          mountPath: /opt/app-root/config/config.yaml
+          subPath: config.yaml
+      volumes:
+      - name: config-volume
+        configMap:
+          name: react-agent-config

@@ -13,6 +13,9 @@ APP_PORT = int(os.environ.get("APP_PORT", "2113"))
 OPENAI_URI = os.environ.get("OPENAI_URI", "http://localhost:11434/v1")
 OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "mistral")
 OPENAI_IGNORE_SSL = os.environ.get("OPENAI_IGNORE_SSL", False)
+MLFLOW_TRACKING_URI = os.environ.get("MLFLOW_TRACKING_URI")
+MLFLOW_TRACKING_TOKEN = os.environ.get("MLFLOW_TRACKING_TOKEN")
+MLFLOW_EXPERIMENT_NAME = os.environ.get("MLFLOW_EXPERIMENT_NAME")
 
 ERROR_MESSAGE = "Unable to process request, please try again later."
 

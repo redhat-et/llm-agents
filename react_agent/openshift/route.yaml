@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: react-agent-route
+  namespace: react-agent-test
+spec:
+  to:
+    kind: Service
+    name: react-agent-server
+  port:
+    targetPort: react-agent-port
+  tls:
+    termination: edge
+  wildcardPolicy: None
