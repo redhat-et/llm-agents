@@ -11,8 +11,10 @@ app = FastAPI()
 MILVUS_HOST = os.getenv("MILVUS_HOST", "localhost")
 MILVUS_PORT = "19530"           # Default gRPC port
 connections.connect("default", host=MILVUS_HOST, port=MILVUS_PORT)
-model = SentenceTransformer('all-MiniLM-L6-v2')
-collection_name = "product_details"
+model = SentenceTransformer("WhereIsAI/UAE-Large-V1")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME", "product_details")
+
+collection_name = COLLECTION_NAME
 collection = Collection(name=collection_name)
 
 # Ensure collection is loaded into memory
