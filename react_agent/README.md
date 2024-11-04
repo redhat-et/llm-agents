@@ -30,7 +30,7 @@ To run the setup locally, follow the steps below:
 
 4. Run `ollama serve`. If you get an error like "Port 11434 already in use" then Ollama is running and you can move to the next step. 
 
-5. In a new terminal, run `poetry run mlflow server` to spin up the MLFlow tracking server. This will run a local instance of MLFlow on your system to log the traces/outputs of the agent application. Navigate to the URL provided to view the MLFlow UI and you will see the outputs being logged under the experiment name `ReAct Agent` -> click on the `Traces` tab.
+5. In a new terminal, run `poetry run mlflow server` to spin up a local MLFlow tracking server. This will run a local instance of MLFlow on your system to log the traces/outputs of the agent application. Update the `.env` by setting: a) `MLFLOW_TRACKING_URI` to the local server URL, b) `MLFLOW_TRACKING_TOKEN` can be commented out if using a local instance, c) `MLFLOW_EXPERIMENT_NAME` to your given experiment name. If you wish to use your own hosted MLFlow deployment, ensure to update the `.env` with their respective values. Navigate to the MLFlow URL to view the MLFlow UI and you will see the outputs being logged under the experiment name `ReAct Agent` -> click on the `Traces` tab.
 
 6. In a new terminal, run `poetry run python react_agent/api.py` to spin up the agent API server.
 
