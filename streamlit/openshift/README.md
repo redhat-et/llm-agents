@@ -46,4 +46,4 @@ oc get route streamlit-route -n kubecon-agent-demo
 
 ### Containerfile
 
-The Containerfiles used to build the deployment images can be found [here](https://github.com/redhat-et/llm-agents/streamlit-Containerfile)
+The Containerfiles used to build the deployment images can be found [here](https://github.com/redhat-et/llm-agents/blob/main/streamlit-Containerfile).
