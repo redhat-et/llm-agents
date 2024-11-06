@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: streamlit-config
+  namespace: react-agent-test
+data:
+  APP_HOST: "react-agent-server.react-agent-test.svc.cluster.local"
+  APP_PORT: "2113"

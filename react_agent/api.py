@@ -7,21 +7,27 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import logging
 from contextlib import asynccontextmanager
 
-import mlflow
 import uvicorn
 from fastapi import FastAPI
-
+import mlflow
 from react_agent.agent import react_agent
 from react_agent.apispec import ReActRequest, ReActResponse
-from react_agent.constants import APP_HOST, APP_PORT
-
+from react_agent.constants import APP_HOST, APP_PORT, MLFLOW_EXPERIMENT_NAME, MLFLOW_TRACKING_URI, MLFLOW_TRACKING_TOKEN
 logger = logging.getLogger(__name__)
 
+# Connect to a hosted mlflow
+mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+if not mlflow.get_experiment_by_name(MLFLOW_EXPERIMENT_NAME):
+    mlflow.create_experiment(name=MLFLOW_EXPERIMENT_NAME)
+
+experiment = mlflow.get_experiment_by_name(MLFLOW_EXPERIMENT_NAME)
+experiment_id = experiment.experiment_id
+
 # Start logging
-mlflow.langchain.autolog(log_traces=True)
+with mlflow.start_run(experiment_id=experiment_id):
+    mlflow.langchain.autolog(log_traces=True)
 
 agents = {}
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

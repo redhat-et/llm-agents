@@ -1,0 +1,66 @@
+# Builder image to install dependencies from pyproject and lock file
+FROM quay.io/fedora/python-310:latest AS builder
+USER root
+ENV POETRY_HOME=/opt/poetry \
+    POETRY_VERSION=1.8.2
+
+# Install Poetry
+RUN wget -P /tmp/ https://certs.corp.redhat.com/certs/Current-IT-Root-CAs.pem && \
+    curl -sSL https://install.python-poetry.org | python - && \
+    ${POETRY_HOME}/bin/poetry config virtualenvs.in-project true && \
+    ${POETRY_HOME}/bin/poetry config certificates.de-cop-nexus.cert /tmp/Current-IT-Root-CAs.pem
+
+# Copy the source code and install dependencies
+COPY . /opt/app-root/src/
+WORKDIR /opt/app-root/src/
+RUN ${POETRY_HOME}/bin/poetry install --only main
+
+# Final image
+FROM quay.io/fedora/python-310:latest
+LABEL maintainer="et@redhat.com" \
+    io.k8s.description="ReAct Agent" \
+    io.k8s.display-name="react_agent" \
+    io.openshift.tags="et"
+
+USER root
+
+# Update OS and install necessary packages
+RUN dnf -y update && \
+    dnf -y install java-17-openjdk tini wget && \
+    dnf -y autoremove && \
+    dnf -y clean all && \
+    wget -P /etc/pki/ca-trust/source/anchors https://certs.corp.redhat.com/certs/Current-IT-Root-CAs.pem && \
+    keytool -import -noprompt -keystore /etc/pki/java/cacerts -file /etc/pki/ca-trust/source/anchors/Current-IT-Root-CAs.pem -alias RH-IT-Root-CA -storepass changeit && \
+    update-ca-trust enable && \
+    update-ca-trust extract
+
+# Install Poetry in the final stage
+ENV POETRY_HOME=/opt/poetry \
+    PATH="/opt/poetry/bin:$PATH"
+RUN curl -sSL https://install.python-poetry.org | python -
+
+# Copy the source code and set up the environment
+COPY . /opt/app-root/src/
+WORKDIR /opt/app-root/src/
+RUN fix-permissions /opt/app-root/src -P && \
+    echo "" > /opt/app-root/bin/activate
+
+# Copy virtual environment from the builder stage
+COPY --from=builder --chown=1001:0 /opt/app-root/src/.venv /opt/app-root/src/.venv
+
+# Install streamlit directly
+RUN /opt/app-root/src/.venv/bin/pip install streamlit
+
+# Copy the starter.sh script and set permissions
+COPY agent-starter.sh /opt/app-root/src/
+RUN chmod +x /opt/app-root/src/agent-starter.sh
+
+USER 1001
+
+EXPOSE 2113 8501
+
+# Ensure the virtual environment is included in the PATH
+ENV PATH="/opt/app-root/src/.venv/bin:$PATH"
+
+# Start the API server using agent-starter.sh
+CMD ["/opt/app-root/src/agent-starter.sh"]

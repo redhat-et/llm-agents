@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 readme = "README.md"
 authors = ["Red Hat"]
-packages = [{include = "llm_agents"}]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<4.0"
