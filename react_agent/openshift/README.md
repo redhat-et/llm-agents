@@ -16,7 +16,19 @@ git clone git@github.com:redhat-et/llm-agents.git
 cd llm-agents/react_agent
 ```
 
-### Step 2: Deploy the ReAct Agent API Server
+#### Step 2: Login to your OpenShift/Kubernetes cluster
+
+```sh
+oc login <your cluster endpoint>
+```
+
+Select the project namespace where you would like to deploy the application.
+
+```sh
+oc project <your project/namespace name>
+```
+
+### Step 3: Deploy the ReAct Agent API Server
 
 The agent API server is responsible for handling requests and interacting with the LLM. It exposes endpoints for different functionalities of the tool-based agent. The API server processes incoming requests, sends them to the appropriate tools or models, and returns the results to the clients. This deployment step sets up the necessary backend infrastructure for the ReAct agent.
 
