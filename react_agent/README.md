@@ -30,11 +30,13 @@ To run the setup locally, follow the steps below:
 
 4. Run `ollama serve`. If you get an error like "Port 11434 already in use" then Ollama is running and you can move to the next step. 
 
-5. In a new terminal, run `poetry run mlflow server` to spin up a local MLFlow tracking server. This will run a local instance of MLFlow on your system to log the traces/outputs of the agent application. Update the `.env` by setting: a) `MLFLOW_TRACKING_URI` to the local server URL, b) `MLFLOW_TRACKING_TOKEN` can be commented out if using a local instance, c) `MLFLOW_EXPERIMENT_NAME` to your given experiment name. If you wish to use your own hosted MLFlow deployment, ensure to update the `.env` with their respective values. Navigate to the MLFlow URL to view the MLFlow UI and you will see the outputs being logged under the experiment name `ReAct Agent` -> click on the `Traces` tab.
+5. In a new terminal, run `poetry run mlflow server` to spin up a local [MLFlow](https://mlflow.org/) tracking server. MlFlow is an open source tool for managing the Machine Learning Lifecycle and we are using it to log the traces/outputs of the LLM agent application. Update the `.env` by setting: a) `MLFLOW_TRACKING_URI` to the local server URL, b) `MLFLOW_TRACKING_TOKEN` can be commented out if using a local instance, c) `MLFLOW_EXPERIMENT_NAME` to your given experiment name. If you wish to use your own hosted MLFlow deployment, ensure to update the `.env` with their respective values. Navigate to the MLFlow URL to view the MLFlow UI and you will see the outputs being logged under the experiment name `ReAct Agent` -> click on the `Traces` tab.
 
-6. In a new terminal, run `poetry run python react_agent/api.py` to spin up the agent API server.
+6. If you wish to deploy your own MLFlow application on an OpenShift/Kubernetes cluster, you can view the GitHub repo [here](https://github.com/redhat-et/mlflow-openshift). This repo contains all the code and documentation neded for setting up the MLFlow application.
 
-7. Congrats! You now have a ReAct agent server running locally! 🥳 If you would like to setup a simple UI to interact with the agent server you can find more details on setting up a Streamlit UI application [here](https://github.com/redhat-et/llm-agents/tree/main/streamlit/README.md).
+7. In a new terminal, run `poetry run python react_agent/api.py` to spin up the agent API server.
+
+8. Congrats! You now have a ReAct agent server running locally! 🥳 If you would like to setup a simple UI to interact with the agent server you can find more details on setting up a Streamlit UI application [here](https://github.com/redhat-et/llm-agents/tree/main/streamlit/README.md).
 
 ## Adding Tools for the ReAct agent
 
