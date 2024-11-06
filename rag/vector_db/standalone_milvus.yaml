@@ -25,9 +25,16 @@ spec:
               value: "/milvus/configs/embedEtcd.yaml"
             - name: COMMON_STORAGETYPE
               value: "local"
+          resources:
+            limits:
+              memory: "16Gi"
+              cpu: "4"
+            requests:
+              memory: "4Gi"
+              cpu: "2"
           ports:
             - containerPort: 19530
-            - containerPort: 9091
+            - containerPort: 9093
             - containerPort: 2379
           volumeMounts:
             - name: milvus-volume
@@ -39,17 +46,13 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop: ["ALL"]
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 9091
-            initialDelaySeconds: 90
-            periodSeconds: 30
-            timeoutSeconds: 20
-            failureThreshold: 3
       volumes:
+        # - name: milvus-volume
+        #   emptyDir: {}
         - name: milvus-volume
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: milvus-data-pvc
+
         - name: config-embedetcd
           configMap:
             name: embedetcd-config
@@ -79,10 +82,6 @@ spec:
       protocol: TCP
       port: 19530
       targetPort: 19530
-    - name: http
-      protocol: TCP
-      port: 9091
-      targetPort: 9091
     - name: etcd
       protocol: TCP
       port: 2379
@@ -100,3 +99,15 @@ spec:
     name: milvus-service
   port:
     targetPort: http
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: milvus-data-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi

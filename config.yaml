@@ -1,7 +1,7 @@
 tools:
   - name: "product_assistant"
     description: "Answers questions related to CloudForge products: CloudForge Migrate, Secure, AI Optimizer, DevOps Accelerator, Kubernetes Orchestrator Pro"
-    url: "<HOST>"
+    url: "host/query/product"
     config:
       method: 'POST'
       headers:
@@ -15,10 +15,10 @@ tools:
         json:
           - "response"
       examples:
-        - "What is the CloudForge Migrate product?"
+        - "What does the CloudForge Migrate product do?"
   - name: "HR_assistant"
     description: "Answers questions related to HR, employment, onboarding, culture, policies, workplace, IT, and security"
-    url: "<HOST>"
+    url: "http://host/query/hr"
     config:
       method: 'POST'
       headers:
@@ -32,10 +32,10 @@ tools:
         json:
           - "response"
       examples:
-        - "What should I do before the start date?"
+        - "What HR things should I do before the start date?"
   - name: "accounts_assistant"
     description: "Answers questions related to statements and revenue of customer accounts: FinNova Bank, MediCore Systems, TechWave Solutions"
-    url: "<HOST>"
+    url: "http://host/query/accounts"
     config:
       method: 'POST'
       headers:
@@ -49,4 +49,4 @@ tools:
         json:
           - "response"
       examples:
-        - "What is the revenue from FinNova Bank?"
+        - "Total Payments Received from FinNova Bank?"
