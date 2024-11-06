@@ -39,4 +39,4 @@ oc apply -f openshift/configmap.yaml
 
 ### Containerfile
 
-The Containerfiles used to build the deployment images can be found [here](https://github.com/redhat-et/llm-agents/react-agent-Containerfile)
+The Containerfiles used to build the deployment images can be found [here](https://github.com/redhat-et/llm-agents/blob/main/react-agent-Containerfile)
