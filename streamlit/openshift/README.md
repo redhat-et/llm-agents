@@ -16,7 +16,7 @@ git clone git@github.com:redhat-et/llm-agents.git
 cd llm-agents/streamlit
 ```
 
-#### Step 2: Login to your OpenShift/Kubernetes cluster
+### Step 2: Login to your OpenShift/Kubernetes cluster
 
 ```sh
 oc login <your cluster endpoint>
