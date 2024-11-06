@@ -16,7 +16,19 @@ git clone git@github.com:redhat-et/llm-agents.git
 cd llm-agents/streamlit
 ```
 
-### Step 2: Deploy the Streamlit app
+#### Step 2: Login to your OpenShift/Kubernetes cluster
+
+```sh
+oc login <your cluster endpoint>
+```
+
+Select the project namespace where you would like to deploy the application.
+
+```sh
+oc project <your project/namespace name>
+```
+
+### Step 3: Deploy the Streamlit app
 
 Streamlit is a UI application that serves as the front-end interface for interacting with a LLM application. Users can input queries into the webapp, which sends these queries to the agent API server. The agent API server processes the queries, interacts with the underlying tools or models, and sends the responses back to the webapp. The webapp then displays these responses to the user. This deployment step sets up the user interface for interacting with the tool-based agents.
 
@@ -36,7 +48,7 @@ oc apply -f openshift/route.yaml
 oc apply -f openshift/configmap.yaml
 ```
 
-### Step 3: Accessing the Streamlit app
+### Step 4: Accessing the Streamlit app
 
 You can now launch the Streamlit app through the route created. To retrieve the route URL to access the app:
 
