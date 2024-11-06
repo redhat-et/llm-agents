@@ -2,7 +2,7 @@
 
 ## Pre-Requisites
 
-In order to run the ReAct agent setup, the following tools must be installed:
+In order to run the ReAct agent setup locally on your laptop, the following must be installed:
 * `poetry`
 * `oc` (optional)
 * [Ollama](https://ollama.com/)
@@ -121,3 +121,6 @@ tools:
       - "What is the definition of a citizen in the U.S. Constitution?"
       - "What article describes the power of the judiciary branch?"
 ```
+
+## OpenShift Deployment
+If you would like to deploy the LLM agent application on an OpenShift/Kubernetes cluster you can find the documentation and resources in [react-agent/openshift](https://github.com/redhat-et/llm-agents/tree/main/react_agent/openshift).
