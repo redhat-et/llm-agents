@@ -34,7 +34,7 @@ To run the setup locally, follow the steps below:
 
 6. In a new terminal, run `poetry run python react_agent/api.py` to spin up the agent API server.
 
-7. In a new terminal, run `poetry run streamlit run streamlit/intro.py` and navigate to the URL provided to use the UI application. You can now chat with the application by asking a question and see the outputs being generated.
+7. Congrats! You now have a ReAct agent server running locally! 🥳 If you would like to setup a simple UI to interact with the agent server you can find more details on setting up a Streamlit UI application [here](https://github.com/redhat-et/llm-agents/tree/main/streamlit/README.md).
 
 ## Adding Tools for the ReAct agent
 
@@ -92,7 +92,7 @@ Values returned by the tool will be converted to a string before being used by t
 ### Option 2: Add an API
 If you have a running API (like a websearch API), you can provide it as a tool to the ReAct agent.
 Currently this only supports APIs with JSON inputs and outputs.
-In the `config.yaml` file, replace the "constitution_tool" with the config for your tool.
+We have provided a sample `config.yaml` file, you can replace it with the config for your tool.
 You need the following fields in any tools you define (unless it says "Optional").
 
 ```yaml
