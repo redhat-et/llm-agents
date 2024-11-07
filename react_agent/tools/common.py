@@ -24,13 +24,15 @@ class DotDict(dict):
     __setattr__ = dict.__setitem__
     __delattr__ = dict.__delitem__
 
+
 class CommonToolInput(BaseModel):
-    """Tool input structure."""
+    """ShadowGPT tool input structure."""
 
     prompt: str = Field(description="should be a prompt for an AI")
 
+
 class CommonTool(BaseTool):
-    """Tool for interacting with external API instances."""
+    """Tool for interacting with ShadowGPT instances."""
 
     name: str = Field(description="Tool name")
     description: str = Field(description="Tool description")
@@ -54,22 +56,23 @@ class CommonTool(BaseTool):
             url_response.raise_for_status()
         # Parse the response
         url_response_json = url_response.json()
-        url_response_dotdict = DotDict(url_response_json)
+        #url_response_dotdict = DotDict(url_response_json)
 
         # Get the answer
         response_loc = self.config["responseParser"]
-        response_loc = ".".join(response_loc.split(".")[1:]) if response_loc.startswith("json") else response_loc
-        response = url_response_dotdict.__getattr__(response_loc).strip()
+        # response_loc = ".".join(response_loc.split(".")[1:]) if response_loc.startswith("json") else response_loc
+        # response = url_response_dotdict.__getattr__(response_loc).strip()
+        response = url_response_json[0][response_loc]
 
         # Create metadata
         metadata = {}
-        metadata_fields = self.config.get("responseMetadata", None)
-        if metadata_fields:
-            for field in metadata_fields:
-                name = field["name"]
-                loc = field["loc"]
-                loc = ".".join(loc.split(".")[1:]) if loc.startswith("json") else loc
-                metadata[name] = url_response_dotdict.__getattr__(loc)
+        # metadata_fields = self.config.get("responseMetadata", None)
+        # if metadata_fields:
+        #     for field in metadata_fields:
+        #         name = field["name"]
+        #         loc = field["loc"]
+        #         loc = ".".join(loc.split(".")[1:]) if loc.startswith("json") else loc
+        #         metadata[name] = url_response_dotdict.__getattr__(loc)
         return response, metadata
 
     def format_response(self, response: str, metadata: dict):

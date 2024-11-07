@@ -1,23 +1,52 @@
 tools:
-  - name: "constitution_tool"
-    description: "Answers questions about the U.S. Constitution."
-    url: "https://my.app/v1/completions"
+  - name: "product_assistant"
+    description: "Answers questions related to CloudForge products: CloudForge Migrate, Secure, AI Optimizer, DevOps Accelerator, Kubernetes Orchestrator Pro"
+    url: "host/query/product"
     config:
       method: 'POST'
       headers:
         'Content-Type': 'application/json'
-        'Authorization': 'Basic 12345'
       body:
-        prompt: '{{prompt}}'
-      responseParser: 'json.answer'
-      responseMetadata: 
-        - name: 'sources'
-          loc: 'json.sources'
+        query_text: '{{prompt}}'
+        top_k: 3
+      responseParser: 'text_chunk'
       responseFormat:
         agent: '{{response}}'
-        json: 
+        json:
           - "response"
-          - "sources"
-    examples:
-      - "What is the definition of a citizen in the U.S. Constitution?"
-      - "What article describes the power of the judiciary branch?"
+      examples:
+        - "What does the CloudForge Migrate product do?"
+  - name: "HR_assistant"
+    description: "Answers questions related to HR, employment, onboarding, culture, policies, workplace, IT, and security"
+    url: "http://host/query/hr"
+    config:
+      method: 'POST'
+      headers:
+        'Content-Type': 'application/json'
+      body:
+        query_text: '{{prompt}}'
+        top_k: 3
+      responseParser: 'text_chunk'
+      responseFormat:
+        agent: '{{response}}'
+        json:
+          - "response"
+      examples:
+        - "What HR things should I do before the start date?"
+  - name: "accounts_assistant"
+    description: "Answers questions related to statements and revenue of customer accounts: FinNova Bank, MediCore Systems, TechWave Solutions"
+    url: "http://host/query/accounts"
+    config:
+      method: 'POST'
+      headers:
+        'Content-Type': 'application/json'
+      body:
+        query_text: '{{prompt}}'
+        top_k: 3
+      responseParser: 'text_chunk'
+      responseFormat:
+        agent: '{{response}}'
+        json:
+          - "response"
+      examples:
+        - "Total Payments Received from FinNova Bank?"
