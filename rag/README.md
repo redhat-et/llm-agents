@@ -1,7 +1,7 @@
 # Steps to create the RAG tool
 
 This readme file documents two steps:
-1) Deploy a standalone milvus container and initiate it with company documents
+1) Deploy a standalone Milvus vector database and populate it with sample documents that can be found in the `rag/docs` folder
 2) Deploy a RAG API service that can be used as a tool by the Agent
 
 ## 1. [Milvus](https://milvus.io/docs/) Deployment and [pymilvus](https://pymilvus.readthedocs.io/) SDK Usage
@@ -23,15 +23,15 @@ This guide explains how to deploy Milvus using Kubernetes (specifically OpenShif
 
 #### 2. Connecting to Milvus with pymilvus
 
-#### Example Notebook Code to Delete a Collection
+#### Example Notebook Code to Populate a Collection
 
 1. Open Jupyter Notebook `vector_db/vector_db_insert.ipynb` and add the Milvus host from step 1.
 
-2. Run all the notebook cells
+2. Run all the notebook cells including cells that embed the markdown [documents](./docs) and insert vectors into the Milvus collection. 
 
 ## RAG tool: Uvicorn FastAPI Deployment on OpenShift
 
-This guide provides step-by-step instructions to build a container image for a `uvicorn` FastAPI application, push it to a container registry (Quay.io), and deploy it on OpenShift.
+This guide provides step-by-step instructions to build a container image for a `uvicorn` FastAPI application to expose the RAG service, push it to a container registry (Quay.io) and deploy it on OpenShift.
 
 ## Prerequisites
 
@@ -73,4 +73,4 @@ oc apply -f rag_tool_service.yaml
 
 ### Access the Application
 
-1. Use the service location or route created in the previous file as the tool endpoint in the config.yaml that the agent will use. 
+1. Use the service location or route created in the previous file as the tool endpoint in the [config.yaml](../config.yaml) that the agent will use. 
